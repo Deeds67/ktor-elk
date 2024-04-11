@@ -1,0 +1,23 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %X{call-id} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="trace">
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+
+    <appender name="STASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5044</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        </encoder>
+        <keepAliveDuration>5 minutes</keepAliveDuration>
+    </appender>
+    <root level="trace">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STASH"/>
+    </root>
+</configuration>
